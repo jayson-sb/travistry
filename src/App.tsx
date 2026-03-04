@@ -6,7 +6,7 @@ import {
   categories,
   type PromptCategory,
 } from "@/content/prompts";
-import { Search, X, SlidersHorizontal } from "lucide-react";
+import { Search, X, SlidersHorizontal, MessageSquarePlus } from "lucide-react";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -72,6 +72,17 @@ function App() {
                 <span className="absolute -right-0.5 -top-0.5 h-2.5 w-2.5 rounded-full bg-[#ff3407] ring-2 ring-white" />
               )}
             </button>
+
+            {/* Feedback */}
+            <a
+              href="https://docs.google.com/forms/d/e/1FAIpQLSf0sfiESG6UJGv8-p8eJKszaf7qKcUu4VF_1OWEG98uYD7DKA/viewform"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="cursor-pointer shrink-0 rounded-full p-2 text-slate-500 transition-all duration-200 hover:bg-slate-100"
+              title="Submit feedback"
+            >
+              <MessageSquarePlus className="h-4 w-4 sm:h-[18px] sm:w-[18px]" />
+            </a>
           </div>
         </div>
 
