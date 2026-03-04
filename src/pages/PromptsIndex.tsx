@@ -371,7 +371,7 @@ export const PromptsIndex = ({
             Smart travel prompts for your next trip. Build itineraries, compare and discover based on your needs.
           </p>
 
-          <div className="mt-8 sm:mt-10 flex justify-center">
+          <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
             <Button
               size="lg"
               variant="outline"
@@ -382,6 +382,20 @@ export const PromptsIndex = ({
             >
               Explore prompts
               <ArrowDown className="animate-bounce h-4 w-4" />
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="cursor-pointer gap-2 rounded-full border-slate-300 px-8 py-3 text-sm font-medium text-slate-600 shadow-none transition-all hover:bg-slate-100 hover:border-slate-400 hover:text-slate-800 sm:px-10 sm:py-3.5 sm:text-base"
+              asChild
+            >
+              <a
+                href="https://docs.google.com/forms/d/e/1FAIpQLSf0sfiESG6UJGv8-p8eJKszaf7qKcUu4VF_1OWEG98uYD7DKA/viewform"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Share feedback
+              </a>
             </Button>
           </div>
         </div>
