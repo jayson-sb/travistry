@@ -136,6 +136,8 @@ function App() {
           </div>
         </div>
       </footer>
+      {/* Fixed bottom viewport fade */}
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 h-20 bg-gradient-to-t from-white to-transparent sm:h-24" />
       <Toaster richColors />
     </div>
   );
