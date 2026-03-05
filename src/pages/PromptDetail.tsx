@@ -209,6 +209,11 @@ export const PromptDetail = ({ slug }: { slug?: string }) => {
                       key={service.name}
                       className="cursor-pointer gap-2"
                       onClick={async () => {
+                        const newTab = window.open(
+                          service.buildUrl(copyablePrompt),
+                          "_blank",
+                          "noreferrer"
+                        );
                         try {
                           await navigator.clipboard.writeText(copyablePrompt);
                           trackEvent({
@@ -218,27 +223,21 @@ export const PromptDetail = ({ slug }: { slug?: string }) => {
                               destination: service.name,
                             },
                           });
-                          window.open(
-                            service.buildUrl(copyablePrompt),
-                            "_blank",
-                            "noreferrer"
-                          );
                           toast.success(
                             service.prefills
                               ? `Opening ${service.name}…`
                               : `Prompt copied! Paste in ${service.name}.`
                           );
                         } catch {
-                          window.open(
-                            service.buildUrl(copyablePrompt),
-                            "_blank",
-                            "noreferrer"
-                          );
+                          if (!newTab) {
+                            window.location.href =
+                              service.buildUrl(copyablePrompt);
+                          }
                         }
                       }}
                     >
                       <service.icon className="h-4 w-4" />
-                      {service.name}
+                      {"label" in service ? service.label : service.name}
                     </DropdownMenuItem>
                   ))}
                 </DropdownMenuContent>

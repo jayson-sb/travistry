@@ -92,20 +92,24 @@ const PromptCard = ({ prompt }: { prompt: PromptEntry }) => {
   };
 
   const handleOpenIn = async (service: (typeof aiServices)[number]) => {
+    // Open the window synchronously inside the user gesture so mobile browsers
+    // don't block it as a popup (async clipboard awaits would break this).
+    const newTab = window.open(service.buildUrl(text), "_blank", "noreferrer");
     try {
       await navigator.clipboard.writeText(text);
       trackEvent({
         name: "outbound_click",
         payload: { slug: prompt.id, destination: service.name },
       });
-      window.open(service.buildUrl(text), "_blank", "noreferrer");
       toast.success(
         service.prefills
           ? `Opening ${service.name}…`
           : `Prompt copied! Paste in ${service.name}.`
       );
     } catch {
-      window.open(service.buildUrl(text), "_blank", "noreferrer");
+      if (!newTab) {
+        window.location.href = service.buildUrl(text);
+      }
     }
   };
 
@@ -169,7 +173,7 @@ const PromptCard = ({ prompt }: { prompt: PromptEntry }) => {
                   onClick={() => handleOpenIn(service)}
                 >
                   <service.icon className="h-4 w-4" />
-                  {service.name}
+                  {"label" in service ? service.label : service.name}
                 </DropdownMenuItem>
               ))}
             </DropdownMenuContent>
