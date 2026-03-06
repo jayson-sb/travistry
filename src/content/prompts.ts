@@ -56,9 +56,9 @@ export const buildPreamble = (prompt: PromptEntry): string => {
     role,
     "",
     "Before answering:",
-    "- Draw on any memory or prior context you have about me — my travel style, home base, budget, or past trips — to personalize your response. Only ask if something essential to the task is genuinely missing.",
-    "- If any detail is missing or unclear, ask before generating.",
-    "- Anything in square brackets in ALL CAPS (e.g. [DESTINATION]) is a placeholder I haven't filled in — ask for it before generating.",
+    "- Draw on any memory or prior context you have about me — my travel style, home base, budget, or past trips — to personalize your response.",
+    "- If any detail is missing or unclear, make a reasonable assumption and state it clearly at the start of your response. Only ask if the missing info is the core subject of the task (e.g. destination name) and truly cannot be assumed.",
+    "- Anything in square brackets in ALL CAPS (e.g. [DESTINATION]) is a placeholder I may not have filled in — make a reasonable assumption and flag it, rather than asking me to clarify.",
     "- If you reference prices, hours, or availability, note they may change and briefly suggest how I can verify.",
     "- Your training data has a cutoff date. For any specific business, price, or schedule you mention, flag it with [verify] and suggest how to check (e.g. Google Maps, official site, recent reviews).",
     "- Prefer specific, named places over generic descriptions. If you can't name a specific place with confidence, say so rather than inventing one.",
@@ -104,6 +104,8 @@ export const promptLibrary: PromptEntry[] = [
     ],
     promptTemplate: `I'm planning a trip to [DESTINATION] for [DAYS] days in [MONTH]. I'm traveling as a [TRAVEL_PARTY] and the vibe I want is: [VIBE].
 
+Where any detail above is missing, state your assumption and proceed — don't ask me to clarify.
+
 Build a day-by-day itinerary:
 
 1. DAY-BY-DAY PLAN: For each day, create time-blocked slots (morning, midday, afternoon, evening). For each slot include:
@@ -111,16 +113,13 @@ Build a day-by-day itinerary:
    - Approximate duration at each stop
    - How to get to the next stop (walking time, transit line, or taxi estimate)
    - One backup option in case it's closed or too crowded
+   - Flag any tricky opening hours, closure days, or ticket-only entry inline with the relevant stop
 
-2. OPENING HOURS & TIMING: Flag any spots with tricky hours (closed certain days, seasonal hours, ticket-only entry). Suggest the best arrival time to avoid crowds.
+2. NEIGHBORHOOD FLOW: Group activities by neighborhood so I'm not zigzagging across the city. Explain the logical flow.
 
-3. NEIGHBORHOOD FLOW: Group activities by neighborhood so I'm not zigzagging across the city. Explain the logical flow.
+3. MEALS: Suggest specific meal spots (or street food areas) that fit naturally into the route. Include what they're known for.
 
-4. MEALS: Suggest specific meal spots (or street food areas) that fit naturally into the route. Include what they're known for.
-
-5. EVENING OPTIONS: For each night, suggest 2 options (one low-key, one more active) based on energy levels after a full day.
-
-6. PACKING SHORTLIST: 3–5 items specific to this destination and season that most travelers forget.
+4. EVENING OPTIONS: For each night, suggest 2 options (one low-key, one more active) based on energy levels after a full day.
 
 Format the plan so I can screenshot each day and use it as a walking guide.
 
@@ -432,6 +431,53 @@ Rank the neighborhoods for my traveler type:
 4. HYBRID STRATEGY: If I have 5+ days, should I split between 2 neighborhoods? Which combo works best and why?
 
 5. INSIDER MOVE: One neighborhood that's not in most guides but is perfect for a [TRAVELER_TYPE] traveler — explain why it's underrated.`,
+  },
+  {
+    id: "best-base-for-route",
+    slug: "best-base-for-route",
+    title: "Find the best base for your trip route",
+    summary:
+      "Visiting multiple spots in a city? Find the one area to stay that minimizes transit to everywhere you want to go — with amenities and trade-offs.",
+    category: "Stays",
+    intent: "comparison",
+    purpose:
+      "Solves the 'where should I stay if I want to reach A, B, and C easily?' problem by comparing base areas against actual transit times and neighborhood quality.",
+    tags: ["base", "location", "transit", "hotel area", "strategic stay"],
+    variables: [
+      { key: "destination", label: "Destination city", placeholder: "e.g. Tokyo", example: "Tokyo" },
+      { key: "key_places", label: "Key places you want to visit", placeholder: "e.g. Shibuya, Asakusa, Shinjuku, Tsukiji", example: "Shibuya, Asakusa, Shinjuku, Tsukiji" },
+      { key: "travel_party", label: "Travel party", placeholder: "solo / couple / family / friends", example: "couple" },
+      { key: "priorities", label: "What matters for your stay area", placeholder: "e.g. walkable, safe at night, good food nearby, quiet", example: "walkable, good food nearby" },
+      { key: "budget", label: "Nightly accommodation budget", placeholder: "e.g. $80–150/night", example: "$80–150/night" },
+    ],
+    whenToUse: [
+      "When you have a list of places to visit and need the most strategic area to stay",
+      "When you want to minimize daily commute time across your itinerary",
+      "When you want to understand the amenities and vibe around potential hotel areas",
+    ],
+    promptTemplate: `I'm staying in [DESTINATION], traveling as a [TRAVEL_PARTY], budget around [BUDGET]. The key places I want to visit: [KEY_PLACES]. What matters for my stay area: [PRIORITIES].
+
+Find the best base for my trip:
+
+1. TOP 3 BASE AREAS: For each candidate neighborhood, provide:
+   - Why it works as a base for my specific list of places
+   - Vibe and character in one sentence
+   - What's within walking distance (food, convenience stores, transit)
+   - Safety and comfort level
+   - Typical accommodation price range
+   - Honest downside of staying here
+
+2. TRANSIT TIME MATRIX: A table showing travel time from each base area to each of my key places:
+   Base area | [Place 1] | [Place 2] | [Place 3] | ... | Average
+   Include transit method (walk / metro line / bus) for each.
+
+3. MY TOP PICK: Based on my priorities and the transit matrix, recommend one area. Explain why the average transit time + neighborhood quality makes this the winner.
+
+4. SPECIFIC STREETS: Narrow it down — suggest the exact sub-area or streets to search for accommodation (e.g. "Look for hotels within 5 minutes of [station name], between [street] and [street]").
+
+5. RUNNER-UP: One alternative base that wins if I value a different priority — explain the trade-off clearly.
+
+For every specific place you recommend, include one way I can verify it's still open/accurate (e.g. Google Maps search term, official website, or "search for [X] on [platform]").`,
   },
 
   // ── Food & Drink ──────────────────────────────────────────────────────
@@ -840,6 +886,53 @@ Give me a cultural deep-dive:
   },
 
   // ── Smart Planning ────────────────────────────────────────────────────
+  {
+    id: "choose-where-to-travel",
+    slug: "choose-where-to-travel",
+    title: "Help me choose where to travel next",
+    summary:
+      "Not sure where to go? Describe your dates, weather preferences, and dream activities — get 3 destination picks with honest trade-offs.",
+    category: "Smart Planning",
+    intent: "comparison",
+    purpose:
+      "For travelers stuck at step zero — turns vague preferences into a shortlist of destinations with clear reasoning, so you can commit and start planning.",
+    tags: ["destination", "where to go", "discovery", "recommendation", "inspiration"],
+    variables: [
+      { key: "departure_city", label: "Where you're flying from", placeholder: "e.g. Singapore", example: "Singapore" },
+      { key: "duration", label: "How long you have", placeholder: "e.g. 5 days / 2 weeks / a long weekend", example: "5 days" },
+      { key: "travel_month", label: "When you're traveling", placeholder: "e.g. July / flexible", example: "July" },
+      { key: "weather_pref", label: "Weather preference", placeholder: "e.g. warm & sunny / cool & crisp / don't mind rain", example: "warm & sunny" },
+      { key: "activities", label: "Activities you want", placeholder: "e.g. beaches, hiking, street food, nightlife, temples", example: "beaches, street food, nightlife" },
+      { key: "travel_party", label: "Travel party", placeholder: "solo / couple / family / friends", example: "friends" },
+      { key: "budget", label: "Budget level", placeholder: "budget / mid-range / comfort / luxury", example: "mid-range" },
+    ],
+    whenToUse: [
+      "When you have dates but no destination in mind",
+      "When you want recommendations tailored to your weather, activity, and budget preferences",
+      "When you're choosing between regions and need help narrowing down",
+    ],
+    promptTemplate: `I have [DURATION] free in [TRAVEL_MONTH] and I'm flying from [DEPARTURE_CITY]. I'm traveling as a [TRAVEL_PARTY] on a [BUDGET] budget. I want weather that's [WEATHER_PREF] and activities like: [ACTIVITIES].
+
+Help me choose where to go:
+
+1. TOP 3 DESTINATIONS: For each, give me:
+   - A 2-sentence pitch — why this place fits what I described
+   - Weather reality for [TRAVEL_MONTH] (temperature range, rain risk, any deal-breakers)
+   - Top 3 activities that match my interests (specific, not generic)
+   - Approximate flight time and cost range from [DEPARTURE_CITY]
+   - Daily budget estimate (accommodation + food + transport + activities)
+   - One honest caveat (crowds, visa hassle, weather risk, etc.)
+
+2. COMPARISON TABLE:
+   Destination | Flight time | Daily cost | Weather match | Activity match | Caveat
+   Score weather and activity match as Strong / Good / Fair.
+
+3. MY PICK: Recommend one destination and explain why it wins for my specific combo of preferences. Then: "Choose [alternative] instead if ___."
+
+4. BOOKING WINDOW: For your top pick, when should I book flights and accommodation for the best price?
+
+5. QUICK-START: If I go with your #1 pick, give me the 3 things to book or research first.`,
+  },
   {
     id: "compare-two-destinations",
     slug: "compare-two-destinations",
