@@ -47,18 +47,18 @@ export const buildPreamble = (prompt: PromptEntry): string => {
   const isComparison = prompt.intent === "comparison";
 
   const outputInstruction = isComparison
-    ? "Output: Lead with your #1 recommendation and why. Then a compact comparison table. Then the key decision thresholds (\"choose the other option if…\")."
+    ? "Output format: Respond in plain, readable text with markdown headings and bullet points — not JSON, code blocks, or raw data. Lead with your #1 recommendation and why. Then a compact comparison table. Then the key decision thresholds (\"choose the other option if…\")."
     : prompt.intent === "checklist"
-      ? "Output: Lead with the most important actions first. Then a structured, actionable checklist. Flag deadlines and sequence-dependent items."
-      : "Output: Lead with the key recommendation or plan. Then the full detailed breakdown. Be specific — real names, times, costs, and directions.";
+      ? "Output format: Respond in plain, readable text with markdown headings and bullet points — not JSON, code blocks, or raw data. Lead with the most important actions first. Then a structured, actionable checklist. Flag deadlines and sequence-dependent items."
+      : "Output format: Respond in plain, readable text with markdown headings and bullet points — not JSON, code blocks, or raw data. Lead with the key recommendation or plan. Then the full detailed breakdown. Be specific — real names, times, costs, and directions.";
 
   return [
     role,
     "",
     "Before answering:",
     "- Draw on any memory or prior context you have about me — my travel style, home base, budget, or past trips — to personalize your response.",
-    "- If any detail is missing or unclear, make a reasonable assumption and state it clearly at the start of your response. Only ask if the missing info is the core subject of the task (e.g. destination name) and truly cannot be assumed.",
-    "- Anything in square brackets in ALL CAPS (e.g. [DESTINATION]) is a placeholder I may not have filled in — make a reasonable assumption and flag it, rather than asking me to clarify.",
+    "- If any detail is missing or unclear, gather all your clarifying questions and ask them together in a single message upfront. Once I respond, generate the full output — do not ask follow-up rounds of questions.",
+    "- Anything in square brackets in ALL CAPS (e.g. [DESTINATION]) is a placeholder I haven't filled in — include it in your upfront questions.",
     "- If you reference prices, hours, or availability, note they may change and briefly suggest how I can verify.",
     "- Your training data has a cutoff date. For any specific business, price, or schedule you mention, flag it with [verify] and suggest how to check (e.g. Google Maps, official site, recent reviews).",
     "- Prefer specific, named places over generic descriptions. If you can't name a specific place with confidence, say so rather than inventing one.",
@@ -104,7 +104,7 @@ export const promptLibrary: PromptEntry[] = [
     ],
     promptTemplate: `I'm planning a trip to [DESTINATION] for [DAYS] days in [MONTH]. I'm traveling as a [TRAVEL_PARTY] and the vibe I want is: [VIBE].
 
-Where any detail above is missing, state your assumption and proceed — don't ask me to clarify.
+If any detail above is missing, ask all your clarifying questions in one go before generating.
 
 Build a day-by-day itinerary:
 
