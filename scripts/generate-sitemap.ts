@@ -1,32 +1,36 @@
-import { writeFile } from "node:fs/promises";
-import path from "node:path";
+import { writeFileSync } from "node:fs";
+import { resolve, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 
-import { promptLibrary } from "../src/content/prompts";
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const siteUrl = process.env.SITE_URL ?? "https://travelerprompt.replit.app";
+const SITE_URL =
+  process.env.SITE_URL?.replace(/\/$/, "") || "https://paiko.vercel.app";
 
-const url = (pathname: string) =>
-  `${siteUrl.replace(/\/$/, "")}${pathname}`;
+async function main() {
+  const { promptLibrary } = await import("../src/content/prompts.ts");
 
-const routes = [
-  "/",
-  "/insights",
-  ...promptLibrary.map((prompt) => `/prompts/${prompt.slug ?? prompt.id}`),
-];
+  const urls = [
+    `  <url>\n    <loc>${SITE_URL}/</loc>\n  </url>`,
+    ...promptLibrary
+      .filter((p: { slug?: string }) => !!p.slug)
+      .map(
+        (p: { slug?: string }) =>
+          `  <url>\n    <loc>${SITE_URL}/prompts/${p.slug}</loc>\n  </url>`,
+      ),
+  ];
 
-const xml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${routes
-  .map(
-    (route) => `  <url>
-    <loc>${url(route)}</loc>
-  </url>`
-  )
-  .join("\n")}
-</urlset>
-`;
+  const sitemap = [
+    '<?xml version="1.0" encoding="UTF-8"?>',
+    '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
+    ...urls,
+    "</urlset>",
+    "",
+  ].join("\n");
 
-const outputPath = path.resolve("public", "sitemap.xml");
+  const outPath = resolve(__dirname, "../public/sitemap.xml");
+  writeFileSync(outPath, sitemap, "utf-8");
+  console.log(`Sitemap written to ${outPath} (${urls.length} URLs)`);
+}
 
-await writeFile(outputPath, xml, "utf-8");
-console.log(`Sitemap written to ${outputPath}`);
+main();
