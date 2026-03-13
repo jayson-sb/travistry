@@ -87,11 +87,11 @@ export const HeroSection = ({ onExploreClick }: HeroSectionProps) => (
         <span className="block bg-gradient-to-r from-[#ff3407] to-[#ffd6cd] bg-clip-text text-transparent min-h-[1.2em]">
           <TypingText />
         </span>
-        <span className="block mt-1 sm:mt-2">with Paiko</span>
+        <span className="block mt-1 sm:mt-2">with The Travel Lib</span>
       </h1>
 
       <p className="mt-4 max-w-sm sm:max-w-xl text-sm leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg sm:leading-relaxed">
-        Your prompt travel guide. Structured prompts that get you detailed, useful answers with no back-and-forth needed
+        Your prompt travel library. Structured prompts that get you detailed, useful answers with no back-and-forth needed
       </p>
 
       <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
