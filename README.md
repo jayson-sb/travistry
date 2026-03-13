@@ -1,6 +1,6 @@
-# The Travel Lib
+# Travistry
 
-The Travel Lib is a lightweight React app that curates travel-focused AI prompts to help you ask better questions about flights, hotels, destinations, and trip planning—so you can save more on every trip.
+Travistry is a lightweight React app that curates travel-focused AI prompts to help you ask better questions about flights, hotels, destinations, and trip planning—so you can save more on every trip.
 
 ## What it does
 

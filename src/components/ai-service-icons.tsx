@@ -50,7 +50,7 @@ export const PerplexityIcon = (props: IconProps) => (
   </svg>
 );
 
-export const TravelLibLogo = (props: IconProps) => (
+export const TravistryLogo = (props: IconProps) => (
   <svg
     viewBox="0 0 64 64"
     fill="none"

@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const SITE_URL =
-  process.env.SITE_URL?.replace(/\/$/, "") || "https://thetravellib.vercel.app";
+  process.env.SITE_URL?.replace(/\/$/, "") || "https://travistry.vercel.app";
 
 async function main() {
   const { promptLibrary } = await import("../src/content/prompts.ts");
