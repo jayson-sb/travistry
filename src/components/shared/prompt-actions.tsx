@@ -28,7 +28,7 @@ export const PromptActions = ({
         onClick={handleCopy}
       >
         <Copy className={isDefault ? "h-3.5 w-3.5 sm:h-4 sm:w-4" : "h-3 w-3 sm:h-3.5 sm:w-3.5"} />
-        Copy
+        Copy guide
       </Button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>

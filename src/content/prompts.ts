@@ -1126,7 +1126,7 @@ Compare them:
     slug: "trip-plan-in-minutes",
     title: "Get a trip plan in minutes",
     summary:
-      "Don't want to use five prompts? Get an 80%-ready trip plan in one shot — where to stay, what to do, what to eat, and what it'll cost.",
+      "Don't want to juggle five separate guides? Get an 80%-ready trip plan in one shot — where to stay, what to do, what to eat, and what it'll cost.",
     category: "Smart Planning",
     intent: "planning",
     purpose:
@@ -1141,7 +1141,7 @@ Compare them:
       { key: "month", label: "Travel month", placeholder: "e.g. May", example: "May" },
     ],
     whenToUse: [
-      "When you want a complete plan in one prompt — not five separate ones",
+      "When you want a complete plan in one paste — not five separate guides",
       "When you need a solid 80% starting point you can refine later",
       "When you're short on planning time and want to go from zero to bookable fast",
     ],

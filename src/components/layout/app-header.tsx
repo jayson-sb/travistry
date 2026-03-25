@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/input";
-import { FolleoLogo } from "@/components/ai-service-icons";
+import { NavisLogo } from "@/components/ai-service-icons";
 import { Search, X, Sun, Moon } from "lucide-react";
 
 interface AppHeaderProps {
@@ -18,9 +18,9 @@ export const AppHeader = ({ search, setSearch, mounted }: AppHeaderProps) => {
     <header className="fixed top-0 z-50 w-full bg-transparent backdrop-blur-md">
       <div className="mx-auto flex w-full max-w-7xl items-center gap-2 px-4 py-2 sm:gap-3 sm:px-6 sm:py-2.5">
         <a href="/" className="flex shrink-0 items-center gap-1.5 sm:gap-2">
-          <FolleoLogo className="h-6 w-6 sm:h-7 sm:w-7" />
+          <NavisLogo className="h-6 w-6 sm:h-7 sm:w-7" />
           <span className="text-base font-bold tracking-tight text-foreground sm:text-xl">
-            Folleo
+            Navis
           </span>
         </a>
 
@@ -30,7 +30,7 @@ export const AppHeader = ({ search, setSearch, mounted }: AppHeaderProps) => {
             <Input
               ref={searchInputRef}
               className="h-6 border-none bg-transparent shadow-none focus-visible:ring-0 placeholder:text-muted-foreground/60 text-xs ml-1.5 sm:h-7 sm:text-sm sm:ml-2"
-              placeholder="Search..."
+              placeholder="Search guides…"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />

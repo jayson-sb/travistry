@@ -56,7 +56,7 @@ export const PromptsIndex = ({ search, setSearch }: PromptsIndexProps) => {
           >
             <div className="flex items-center justify-center pb-2 sm:pb-4">
               <p className="text-xs text-muted-foreground sm:text-sm">
-                Showing <span className="font-semibold text-foreground">{totalMatches}</span> prompt{totalMatches !== 1 && "s"} across {promptsByCategory.filter((r) => r.prompts.length > 0).length} categories
+                Showing <span className="font-semibold text-foreground">{totalMatches}</span> guide{totalMatches !== 1 && "s"} across {promptsByCategory.filter((r) => r.prompts.length > 0).length} categories
               </p>
             </div>
           </Effect>

@@ -73,7 +73,7 @@ export const CategoryRow = ({ category, prompts }: CategoryRowProps) => {
             {categoryDisplayLabel[category]}
           </h2>
           <span className="text-xs text-muted-foreground sm:text-sm">
-            {prompts.length} prompt{prompts.length !== 1 && "s"}
+            {prompts.length} guide{prompts.length !== 1 && "s"}
           </span>
         </div>
       </Effect>

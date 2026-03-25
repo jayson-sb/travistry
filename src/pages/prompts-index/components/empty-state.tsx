@@ -12,9 +12,9 @@ export const EmptyState = ({ search, onClear }: EmptyStateProps) => (
       <Search className="h-6 w-6 text-muted-foreground/50 sm:h-8 sm:w-8" />
     </div>
     <div className="max-w-md space-y-1.5 sm:space-y-2">
-      <h3 className="text-lg font-semibold text-foreground sm:text-xl">No prompts found</h3>
+      <h3 className="text-lg font-semibold text-foreground sm:text-xl">No guides found</h3>
       <p className="text-sm text-muted-foreground sm:text-base">
-        We couldn't find any prompts matching "{search}". Try adjusting your search.
+        We couldn't find any guides matching "{search}". Try adjusting your search.
       </p>
     </div>
     <Button
