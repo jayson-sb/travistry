@@ -87,11 +87,11 @@ export const HeroSection = ({ onExploreClick }: HeroSectionProps) => (
         <span className="block bg-gradient-to-r from-[#ff3407] to-[#ffd6cd] bg-clip-text text-transparent min-h-[1.2em]">
           <TypingText />
         </span>
-        <span className="block mt-1 sm:mt-2">with Folleo</span>
+        <span className="block mt-1 sm:mt-2">with Navis</span>
       </h1>
 
       <p className="mt-4 max-w-sm sm:max-w-xl text-sm leading-relaxed text-muted-foreground sm:mt-6 sm:text-lg sm:leading-relaxed">
-        Your prompt travel guide. Structured prompts that get you detailed, useful answers with no back-and-forth needed
+        Copy-paste-ready travel guides. Paste into your AI and take it from there—no tech jargon or endless chatting.
       </p>
 
       <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4">
@@ -101,7 +101,7 @@ export const HeroSection = ({ onExploreClick }: HeroSectionProps) => (
           className="group cursor-pointer gap-2 rounded-full border-primary/20 bg-primary/5 px-8 py-3 text-sm font-medium text-primary shadow-none transition-all hover:bg-primary/10 hover:border-primary/30 hover:text-primary sm:px-10 sm:py-3.5 sm:text-base"
           onClick={onExploreClick}
         >
-          Explore prompts
+          Explore guides
           <ArrowDown className="animate-bounce h-4 w-4" />
         </Button>
         <Button

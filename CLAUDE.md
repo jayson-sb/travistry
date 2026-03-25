@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-The Traveler Prompt is a React-based web application that curates travel-focused AI prompts. Users can browse prompts by category, search, copy templates, and open them in various AI services (ChatGPT, Claude, Gemini, Perplexity).
+**Navis** is a React-based web app for **copy-paste-ready travel guides**: structured text users paste into AI assistants (ChatGPT, Claude, Gemini, Perplexity) and take it from there. User-facing copy says "guides," not "prompts," for accessibility.
+
+Internally, content still lives in `promptLibrary` / `PromptEntry` and is built into a full text block via `buildPromptText()`.
 
 Tech stack: Vite + React 19 + TypeScript + Tailwind CSS + Radix UI primitives.
 

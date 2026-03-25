@@ -67,7 +67,7 @@ export const usePromptActions = (prompt: PromptEntry) => {
     try {
       await navigator.clipboard.writeText(text);
       trackEvent({ name: "prompt_copy", payload: { slug: prompt.id } });
-      toast.success("Prompt copied to clipboard");
+      toast.success("Guide copied to clipboard");
     } catch {
       toast.error("Copy failed. Please try again.");
     }
@@ -84,7 +84,7 @@ export const usePromptActions = (prompt: PromptEntry) => {
       toast.success(
         service.prefills
           ? `Opening ${service.name}…`
-          : `Prompt copied! Paste in ${service.name}.`
+          : `Copied! Paste it in ${service.name}.`
       );
     } catch {
       if (!newTab) {

@@ -1,13 +1,13 @@
-# Travistry
+# Navis
 
-Travistry is a lightweight React app that curates travel-focused AI prompts to help you ask better questions about flights, hotels, destinations, and trip planning—so you can save more on every trip.
+Navis is a lightweight React app with **copy-paste-ready travel guides**: copy the text, paste into ChatGPT, Claude, Gemini, or Perplexity, and take it from there—no need to know what a "prompt" is.
 
 ## What it does
 
-- Browse a library of travel prompts by category
-- Search prompts by title/summary/tags
-- Copy a prompt template to your clipboard
-- Open a prompt in tools like ChatGPT, Claude, Gemini, and Perplexity (with optional prefill)
+- Browse travel guides by category
+- Search guides by title, summary, or tags
+- Copy guide text to your clipboard
+- Open an assistant with the text (or paste manually where prefilling is not supported)
 - (Optional) View local, in-browser usage insights (views/copies/searches)
 
 ## Tech stack
